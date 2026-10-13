@@ -4,3 +4,5 @@
  * Namn: Elina Aldevärn
  */
 
+const form = document.querySelector("#searchform");
+const inputEl = document.querySelector("#search");
