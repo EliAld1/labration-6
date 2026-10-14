@@ -24,7 +24,8 @@ function onSubmit(event) {
 
   // Anropa valideringsfunktion
   if (validate(search)) {
-    // Lägger in API
+    // Anropa API
+    getRecipe(search);
   }
 }
 
@@ -38,3 +39,23 @@ function validate(search) {
   errorList.textContent = "";
   return true;
 }
+
+// AJAX för att hämta från API
+async function getRecipe(searchText) {
+  try {
+    const response = await fetch(
+      "https://dummyjson.com/recipes/search?q=${searchText}",
+    );
+    if (!response.ok) { // Kontrollera svar
+      throw new Error("Inget internet!"); // Felmeddelande
+    }
+    const data = await response.json(); // Omvandla data
+    return data;
+  } 
+  catch (error) {
+    console.error("Något gick fel!");
+  }
+}
+
+
+
