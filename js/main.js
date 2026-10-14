@@ -66,7 +66,11 @@ async function showRecipe(event) {
 }
 
 function displayRecipe(recipe) {
+  // Rensa tidigare resultat
+  recipeEl.innerHTML = "";
+
   // Skapar element för recept
+
   const titleEl = document.createElement("h3");
   titleEl.textContent = recipe.name;
 
@@ -74,19 +78,28 @@ function displayRecipe(recipe) {
   imgEl.src = recipe.image;
   imgEl.alt = recipe.name;
 
-  /* SKA LÄGGAS I EN KOLUMMN; AVVAKTA
+  // Skapar div för p-element
+  const infoDiv = document.createElement("div");
+  infoDiv.classList.add("recipe-info"); // Lägger till class-namnet
+
+  // Skapar element för kolummn under bild
   const servingsEl = document.createElement("p");
-  servingsEl.textContent = recipe.servings;
+  servingsEl.textContent = `<strong>Servings:</strong> ${recipe.servings}`;
 
   const prepTimeMinutesEl = document.createElement("p");
-  prepTimeMinutesEl.textContent = recipe.prepTimeMinutes;
+  prepTimeMinutesEl.textContent = `<strong>Prep time:</strong> ${recipe.prepTimeMinutes} minutes`;
 
   const cookTimeMinutesEl = document.createElement("p");
-  cookTimeMinutesEl.textContent = recipe.cookTimeMinutes;
+  cookTimeMinutesEl.textContent = `<strong>Cooking time:</strong> ${recipe.cookTimeMinutes} minutes`;
 
   const difficultyEl = document.createElement("p");
-  difficultyEl.textContent = recipe.difficulty;
-  */ 
+  difficultyEl.textContent = `<strong>Difficulty:</strong> ${recipe.difficulty}`;
+
+  // Lägger in i div-sektion
+  infoDiv.appendChild(servingsEl);
+  infoDiv.appendChild(prepTimeMinutesEl);
+  infoDiv.appendChild(cookTimeMinutesEl);
+  infoDiv.appendChild(difficultyEl);
 
   // Ingridienser i en punktlista
   const ingredientsTitle = document.createElement("h4"); // Rubrik
@@ -116,10 +129,7 @@ function displayRecipe(recipe) {
   // Kopplar ihop elementen
   recipeEl.appendChild(titleEl);
   recipeEl.appendChild(imgEl);
-  recipeEl.appendChild(servingsEl);
-  recipeEl.appendChild(prepTimeMinutesEl);
-  recipeEl.appendChild(cookTimeMinutesEl);
-  recipeEl.appendChild(difficultyEl);
+  recipeEl.appendChild(infoDiv);
   // Lägger till ingridienser och ul till recept sektion
   recipeEl.appendChild(ingredientsTitle);
   recipeEl.appendChild(ulEl);
