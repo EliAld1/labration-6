@@ -14,6 +14,24 @@ const recipeEl = document.querySelector("#recipe");
 
 const errorList = document.querySelector("#error");
 
+// AJAX för att hämta från API
+async function getRecipe(searchText) {
+  try {
+    console.log("Sökord som skickas med;", searchText); // Svar från data
+    const response = await fetch(
+      `https://dummyjson.com/recipes/search?q=${searchText}`,
+    );
+    if (!response.ok) {
+      // Kontrollera svar
+      throw new Error("Inget internet!"); // Felmeddelande
+    }
+    const data = await response.json(); // Omvandla data JSON till JS-objekt
+    return data;
+  } catch (error) {
+    console.error("Något gick fel!");
+  }
+}
+
 // Eventlyssnare för formulär
 form.addEventListener("submit", showRecipe);
 // submitBtn.addEventListener("click", send);
@@ -40,11 +58,10 @@ async function showRecipe(event) {
         "Inget resultat... Vänligen testa sök på ett annat recept!",
       );
       return;
-
-      // Om allt ok, visa första receptet
-      const firstRecipe = data.recipes[0];
-      displayRecipe(firstRecipe);
     }
+    // Om allt ok, visa första receptet
+    const firstRecipe = data.recipes[0];
+    displayRecipe(firstRecipe);
   }
 }
 
@@ -57,6 +74,7 @@ function displayRecipe(recipe) {
   imgEl.src = recipe.image;
   imgEl.alt = recipe.name;
 
+  /* SKA LÄGGAS I EN KOLUMMN; AVVAKTA
   const servingsEl = document.createElement("p");
   servingsEl.textContent = recipe.servings;
 
@@ -68,9 +86,10 @@ function displayRecipe(recipe) {
 
   const difficultyEl = document.createElement("p");
   difficultyEl.textContent = recipe.difficulty;
+  */ 
 
   // Ingridienser i en punktlista
-  const ingredientsTitle = document.createElemen("h4"); // Rubrik
+  const ingredientsTitle = document.createElement("h4"); // Rubrik
   ingredientsTitle.textContent = "Ingredients";
 
   const ulEl = document.createElement("ul"); // Skapar ul-lista
@@ -83,7 +102,7 @@ function displayRecipe(recipe) {
   });
 
   // Instuktioner i en numrerad lista
-  const instructionsTitle = document.createElemen("h4"); // Rubrik
+  const instructionsTitle = document.createElement("h4"); // Rubrik
   instructionsTitle.textContent = "Instructions";
 
   const olEl = document.createElement("ol"); // Skapar ol-lista
@@ -122,22 +141,4 @@ function validate(search) {
   // Rensa tidigare felmeddelande
   errorList.textContent = "";
   return true;
-}
-
-// AJAX för att hämta från API
-async function getRecipe(searchText) {
-  try {
-    console.log("Sökord som skickas med;", searchText); // Svar från data
-    const response = await fetch(
-      `https://dummyjson.com/recipes/search?q=${searchText}`,
-    );
-    if (!response.ok) {
-      // Kontrollera svar
-      throw new Error("Inget internet!"); // Felmeddelande
-    }
-    const data = await response.json(); // Omvandla data JSON till JS-objekt
-    return data;
-  } catch (error) {
-    console.error("Något gick fel!");
-  }
 }
