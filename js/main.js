@@ -23,7 +23,7 @@ async function getRecipe(searchText) {
     );
     if (!response.ok) {
       // Kontrollera svar
-      throw new Error("Inget internet!"); // Felmeddelande
+      throw new Error("Något gick fel!"); // Felmeddelande
     }
     const data = await response.json(); // Omvandla data JSON till JS-objekt
     return data;
@@ -69,8 +69,10 @@ function displayRecipe(recipe) {
   // Rensa tidigare resultat
   recipeEl.innerHTML = "";
 
-  // Skapar element för recept
+  // Skapar article behållare till recept
+  const articleEl = document.createElement("article");
 
+  // Skapar element för recept
   const titleEl = document.createElement("h3");
   titleEl.textContent = recipe.name;
 
@@ -84,16 +86,16 @@ function displayRecipe(recipe) {
 
   // Skapar element för kolummn under bild
   const servingsEl = document.createElement("p");
-  servingsEl.textContent = `<strong>Servings:</strong> ${recipe.servings}`;
+  servingsEl.textContent = `Servings: ${recipe.servings}`;
 
   const prepTimeMinutesEl = document.createElement("p");
-  prepTimeMinutesEl.textContent = `<strong>Prep time:</strong> ${recipe.prepTimeMinutes} minutes`;
+  prepTimeMinutesEl.textContent = `Prep time: ${recipe.prepTimeMinutes} minutes`;
 
   const cookTimeMinutesEl = document.createElement("p");
-  cookTimeMinutesEl.textContent = `<strong>Cooking time:</strong> ${recipe.cookTimeMinutes} minutes`;
+  cookTimeMinutesEl.textContent = `Cooking time: ${recipe.cookTimeMinutes} minutes`;
 
   const difficultyEl = document.createElement("p");
-  difficultyEl.textContent = `<strong>Difficulty:</strong> ${recipe.difficulty}`;
+  difficultyEl.textContent = `Difficulty: ${recipe.difficulty}`;
 
   // Lägger in i div-sektion
   infoDiv.appendChild(servingsEl);
@@ -127,15 +129,17 @@ function displayRecipe(recipe) {
   });
 
   // Kopplar ihop elementen
-  recipeEl.appendChild(titleEl);
-  recipeEl.appendChild(imgEl);
-  recipeEl.appendChild(infoDiv);
+  articleEl.appendChild(titleEl);
+  articleEl.appendChild(imgEl);
+  articleEl.appendChild(infoDiv);
   // Lägger till ingridienser och ul till recept sektion
-  recipeEl.appendChild(ingredientsTitle);
-  recipeEl.appendChild(ulEl);
+  articleEl.appendChild(ingredientsTitle);
+  articleEl.appendChild(ulEl);
   // Lägger till instuktioner och ol till recept sektion
-  recipeEl.appendChild(instructionsTitle);
-  recipeEl.appendChild(olEl);
+  articleEl.appendChild(instructionsTitle);
+  articleEl.appendChild(olEl);
+
+  recipeEl.appendChild(articleEl);
 }
 
 function displayMessage(message) {
