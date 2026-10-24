@@ -55,7 +55,11 @@ async function showRecipe(event) {
   if (validate(search)) {
     // Anropa API
     const data = await getRecipe(search);
-    console.log(data);
+
+    // Avbryt om data = null
+    if (!data) {
+      return;
+    }
 
     // Kontrollera om sökning gav resultat
     if (data.recipes.length === 0) {
