@@ -28,7 +28,12 @@ async function getRecipe(searchText) {
     const data = await response.json(); // Omvandla data JSON till JS-objekt
     return data;
   } catch (error) {
-    console.error("Något gick fel!");
+    console.error("Något gick fel!", error);
+
+    //Visa felmeddelande för användare
+    displayMessage("Kunde inte hämta recept just nu. Vänligen försök igen senare.");
+
+    return null; //Retunerar null isället för undefined
   }
 }
 
